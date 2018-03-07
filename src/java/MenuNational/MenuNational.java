@@ -19,9 +19,9 @@ public class MenuNational {
     /**
      * This is a sample web service operation
      */
-    @WebMethod(operationName = "hello")
+    @WebMethod(operationName = "getMenu")
     public String getMenu() {
-        return null;
+        return "{type:kek}";
     }
 }
 
