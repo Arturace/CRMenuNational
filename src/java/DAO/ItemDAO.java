@@ -32,26 +32,26 @@ public class ItemDAO extends DAO<Item>{
        Statement stm = null;
        try 
        {
-               stm = cnx.createStatement(); 
-               int n= stm.executeUpdate(req);
-               if (n>0)
-               {
-                       stm.close();
-                       return true;
-               }
+            stm = cnx.createStatement(); 
+            int n= stm.executeUpdate(req);
+            if (n>0)
+            {
+                 stm.close();
+                 return true;
+            }
        }
        catch (SQLException exp)
        {
        }
        finally
        {
-               if (stm!=null)
-               try {
-                       stm.close();
-               } catch (SQLException e) {
-                       // TODO Auto-generated catch block
-                       e.printStackTrace();
-               }			
+            if (stm!=null)
+            try {
+                stm.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }			
        }
        return false;
     }
@@ -62,7 +62,11 @@ public class ItemDAO extends DAO<Item>{
         try 
         {
             stm = cnx.createStatement();
-            r = stm.executeQuery("SELECT * FROM items");
+            r = stm.executeQuery("SELECT items.id, items.name, items.price, items.description, items.category, items.availability, options.name, options.minSelection, options.maxSelection, selections.description, selections.price, selections.availability FROM items \n" +
+                                "INNER JOIN items_options ON items_options.itemsId = items.id\n" +
+                                "INNER JOIN options ON options.id = items_options.optionID\n" +
+                                "INNER JOIN options_selections ON options_elections.optionId\n" +
+                                "INNER JOIN selections ON selections.id = options_selections.selectionsId");
             Item i;
             while (r.next())
             {
@@ -86,13 +90,13 @@ public class ItemDAO extends DAO<Item>{
         { }
         finally
         {
-                if (stm!=null)
+            if (stm!=null)
                 try {
-                        r.close();
-                        stm.close();
+                    r.close();
+                    stm.close();
                 } catch (SQLException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
                 }			
         }
         return listeRetour;
@@ -100,41 +104,41 @@ public class ItemDAO extends DAO<Item>{
     @Override
     public boolean update(Item x) {
         String req = "UPDATE items SET "
-                                +", name = "+ x.getName() 
-                +", price = "+ x.getPrice() 
-                +", description = "+ x.getDescription() 
-                +", category = "+ x.getCategory()
-                +", availability = "+ x.getAvailability()
-                    +", WHERE id = "+ x.getId();
+            +", name = "+ x.getName() 
+            +", price = "+ x.getPrice() 
+            +", description = "+ x.getDescription() 
+            +", category = "+ x.getCategory()
+            +", availability = "+ x.getAvailability()
+            +", WHERE id = "+ x.getId();
         //System.out.println("REQUETE "+req);
         Statement stm = null;
         try 
         {
-                stm = cnx.createStatement(); 
-                int n= stm.executeUpdate(req);
-                if (n>0)
-                {
-                        stm.close();
-                        return true;
-                }
+            stm = cnx.createStatement(); 
+            int n= stm.executeUpdate(req);
+            if (n>0)
+            {
+                stm.close();
+                return true;
+            }
         }
         catch (SQLException exp)
         {
         }
         finally
         {
-                if (stm!=null)
+            if (stm!=null)
                 try {
-                        stm.close();
+                    stm.close();
                 } catch (SQLException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
                 }			
         }
         return false;
     }
     
-
+    @Override
     public boolean deleteById(int id) {
         String req = "DELETE 1 FROM items WHERE id = "+id;
         //System.out.println("REQUETE "+req);
@@ -160,12 +164,5 @@ public class ItemDAO extends DAO<Item>{
             }			
         }
         return false;
-    } 
-
-
-    @Override
-    public boolean delete(Item x) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+    }     
 }
