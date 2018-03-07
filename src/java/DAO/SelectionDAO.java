@@ -28,28 +28,26 @@ public class SelectionDAO extends DAO<Selection>{
                     "VALUES ('"+x.getDescription()+"','"+x.getPrice()+"','"+x.getAvailability()+"')";
        
        Statement stm = null;
-       try 
-       {
-               stm = cnx.createStatement(); 
-               int n= stm.executeUpdate(req);
-               if (n>0)
-               {
-                       stm.close();
-                       return true;
-               }
+       try{
+            stm = cnx.createStatement(); 
+            int n= stm.executeUpdate(req);
+            if (n>0){
+                stm.close();
+                return true;
+            }
        }
        catch (SQLException exp)
        {
        }
-       finally
-       {
-               if (stm!=null)
-               try {
-                       stm.close();
-               } catch (SQLException e) {
-                       // TODO Auto-generated catch block
-                       e.printStackTrace();
-               }			
+       finally{
+            if (stm!=null){
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }	
+            }
        }
        return false;
     }
@@ -57,13 +55,11 @@ public class SelectionDAO extends DAO<Selection>{
         Statement stm = null;
         ResultSet r = null;      
         ArrayList<Selection> listeRetour = new ArrayList();
-        try 
-        {
+        try{
             stm = cnx.createStatement();
             r = stm.executeQuery("SELECT * FROM selections");
             Selection s;
-            while (r.next())
-            {
+            while (r.next()){
                 boolean avail = r.getInt("availability") == 0?false:true;                         
                 s = new Selection(
                     r.getInt("id"),
@@ -79,16 +75,16 @@ public class SelectionDAO extends DAO<Selection>{
         }
         catch (SQLException exp)
         { }
-        finally
-        {
-                if (stm!=null)
+        finally{
+            if (stm!=null){
                 try {
-                        r.close();
-                        stm.close();
+                    r.close();
+                    stm.close();
                 } catch (SQLException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                }			
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }	
+            }
         }
         return listeRetour;
     }
@@ -101,28 +97,25 @@ public class SelectionDAO extends DAO<Selection>{
                     +", WHERE id = "+ x.getId();
         //System.out.println("REQUETE "+req);
         Statement stm = null;
-        try 
-        {
-                stm = cnx.createStatement(); 
-                int n= stm.executeUpdate(req);
-                if (n>0)
-                {
-                        stm.close();
-                        return true;
-                }
+        try{
+            stm = cnx.createStatement(); 
+            int n= stm.executeUpdate(req);
+            if (n>0){
+                stm.close();
+                return true;
+            }
         }
-        catch (SQLException exp)
-        {
+        catch (SQLException exp){
         }
-        finally
-        {
-                if (stm!=null)
+        finally{
+            if (stm!=null){
                 try {
-                        stm.close();
+                    stm.close();
                 } catch (SQLException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                }			
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
         }
         return false;
     }
@@ -142,15 +135,15 @@ public class SelectionDAO extends DAO<Selection>{
         }
         catch (SQLException exp) {
         }
-        finally
-        {
-            if (stm!=null)
-            try {
-                stm.close();
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }			
+        finally{
+            if (stm!=null){
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }	
+            }
         }
         return false;
     } 
