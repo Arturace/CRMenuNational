@@ -29,5 +29,5 @@ public abstract class DAO<T> {
 
 	public abstract boolean create(T x);    //INSERT
 	public abstract boolean update(T x);    //UPDATE
-	public abstract boolean delete(T x);    //DELETE
+	public abstract boolean deleteById(int x);    //DELETE
 }

@@ -23,37 +23,34 @@ public class OptionDAO extends DAO<Option>{
     }
     @Override
     public boolean create(Option x) {
-
        String req = "INSERT INTO options ('name' , 'minSelection' , 'maxSelection') "+
                     "VALUES ('"+x.getName()+"','"+x.getMinSelection()+"','"+x.getMaxSelection()+"')";
-       
        Statement stm = null;
        try 
        {
-               stm = cnx.createStatement(); 
-               int n= stm.executeUpdate(req);
-               if (n>0)
-               {
-                       stm.close();
-                       return true;
-               }
+            stm = cnx.createStatement(); 
+            int n= stm.executeUpdate(req);
+            if (n>0)
+            {
+                stm.close();
+                return true;
+            }
        }
        catch (SQLException exp)
-       {
-       }
+       {}
        finally
        {
-               if (stm!=null)
-               try {
-                       stm.close();
-               } catch (SQLException e) {
-                       // TODO Auto-generated catch block
-                       e.printStackTrace();
-               }			
+            if (stm!=null)
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }			
        }
        return false;
     }
-    public ArrayList<Option> findAll(){ // *********************************************************
+    public ArrayList<Option> findAll(){
         Statement stm = null;
         ResultSet r = null;      
         ArrayList<Option> listeRetour = new ArrayList();
@@ -77,16 +74,16 @@ public class OptionDAO extends DAO<Option>{
             return listeRetour;
         }
         catch (SQLException exp)
-        { }
+        {}
         finally
         {
-                if (stm!=null)
+            if (stm!=null)
                 try {
-                        r.close();
-                        stm.close();
+                    r.close();
+                    stm.close();
                 } catch (SQLException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
                 }			
         }
         return listeRetour;
@@ -94,7 +91,7 @@ public class OptionDAO extends DAO<Option>{
     @Override
     public boolean update(Option x) {
         String req = "UPDATE options SET "
-                +", name = "+ x.getName() 
+                +"name = "+ x.getName() 
                 +", minSelection = "+ x.getMinSelection()
                 +", maxSelectiuon = "+ x.getMaxSelection()
                     +", WHERE id = "+ x.getId();
@@ -102,31 +99,29 @@ public class OptionDAO extends DAO<Option>{
         Statement stm = null;
         try 
         {
-                stm = cnx.createStatement(); 
-                int n= stm.executeUpdate(req);
-                if (n>0)
-                {
-                        stm.close();
-                        return true;
-                }
+            stm = cnx.createStatement(); 
+            int n= stm.executeUpdate(req);
+            if (n>0)
+            {
+                stm.close();
+                return true;
+            }
         }
         catch (SQLException exp)
-        {
-        }
+        {}
         finally
         {
-                if (stm!=null)
+            if (stm!=null)
                 try {
-                        stm.close();
+                    stm.close();
                 } catch (SQLException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
                 }			
         }
         return false;
     }
-    
-
+    @Override
     public boolean deleteById(int id) {
         String req = "DELETE 1 FROM options WHERE id = "+id;
         //System.out.println("REQUETE "+req);
@@ -139,25 +134,18 @@ public class OptionDAO extends DAO<Option>{
                 return true;
             }
         }
-        catch (SQLException exp) {
-        }
+        catch (SQLException exp) 
+        {}
         finally
         {
             if (stm!=null)
-            try {
-                stm.close();
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }			
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }			
         }
         return false;
     } 
-
-
-    @Override
-    public boolean delete(Option x) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }
