@@ -36,8 +36,8 @@ public class SelectionDAO extends DAO<Selection>{
                 return true;
             }
        }
-       catch (SQLException exp)
-       {
+       catch (SQLException exp){
+           exp.printStackTrace();
        }
        finally{
             if (stm!=null){
@@ -73,8 +73,9 @@ public class SelectionDAO extends DAO<Selection>{
             stm.close();
             return listeRetour;
         }
-        catch (SQLException exp)
-        { }
+        catch (SQLException exp){ 
+            exp.printStackTrace();
+        }
         finally{
             if (stm!=null){
                 try {
@@ -91,10 +92,10 @@ public class SelectionDAO extends DAO<Selection>{
     @Override
     public boolean update(Selection x) {
         String req = "UPDATE selections SET "
-                +", description = "+ x.getDescription() 
+                +"description = "+ x.getDescription() 
                 +", price = "+ x.getPrice()
                 +", availability = "+ x.getAvailability()
-                    +", WHERE id = "+ x.getId();
+                +", WHERE id = "+ x.getId();
         //System.out.println("REQUETE "+req);
         Statement stm = null;
         try{
@@ -106,6 +107,7 @@ public class SelectionDAO extends DAO<Selection>{
             }
         }
         catch (SQLException exp){
+            exp.printStackTrace();
         }
         finally{
             if (stm!=null){
@@ -120,7 +122,7 @@ public class SelectionDAO extends DAO<Selection>{
         return false;
     }
     
-
+    @Override
     public boolean deleteById(int id) {
         String req = "DELETE 1 FROM selections WHERE id = "+id;
         //System.out.println("REQUETE "+req);
@@ -134,6 +136,7 @@ public class SelectionDAO extends DAO<Selection>{
             }
         }
         catch (SQLException exp) {
+            exp.printStackTrace();
         }
         finally{
             if (stm!=null){
@@ -147,11 +150,4 @@ public class SelectionDAO extends DAO<Selection>{
         }
         return false;
     } 
-
-
-    @Override
-    public boolean delete(Selection x) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }
