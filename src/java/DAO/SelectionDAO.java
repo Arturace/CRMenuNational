@@ -28,28 +28,26 @@ public class SelectionDAO extends DAO<Selection>{
                     "VALUES ('"+x.getDescription()+"','"+x.getPrice()+"','"+x.getAvailability()+"')";
        
        Statement stm = null;
-       try 
-       {
-               stm = cnx.createStatement(); 
-               int n= stm.executeUpdate(req);
-               if (n>0)
-               {
-                       stm.close();
-                       return true;
-               }
+       try{
+            stm = cnx.createStatement(); 
+            int n= stm.executeUpdate(req);
+            if (n>0){
+                stm.close();
+                return true;
+            }
        }
-       catch (SQLException exp)
-       {
+       catch (SQLException exp){
+           exp.printStackTrace();
        }
-       finally
-       {
-               if (stm!=null)
-               try {
-                       stm.close();
-               } catch (SQLException e) {
-                       // TODO Auto-generated catch block
-                       e.printStackTrace();
-               }			
+       finally{
+            if (stm!=null){
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }	
+            }
        }
        return false;
     }
@@ -57,13 +55,11 @@ public class SelectionDAO extends DAO<Selection>{
         Statement stm = null;
         ResultSet r = null;      
         ArrayList<Selection> listeRetour = new ArrayList();
-        try 
-        {
+        try{
             stm = cnx.createStatement();
             r = stm.executeQuery("SELECT * FROM selections");
             Selection s;
-            while (r.next())
-            {
+            while (r.next()){
                 boolean avail = r.getInt("availability") == 0?false:true;                         
                 s = new Selection(
                     r.getInt("id"),
@@ -77,57 +73,56 @@ public class SelectionDAO extends DAO<Selection>{
             stm.close();
             return listeRetour;
         }
-        catch (SQLException exp)
-        { }
-        finally
-        {
-                if (stm!=null)
+        catch (SQLException exp){ 
+            exp.printStackTrace();
+        }
+        finally{
+            if (stm!=null){
                 try {
-                        r.close();
-                        stm.close();
+                    r.close();
+                    stm.close();
                 } catch (SQLException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                }			
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }	
+            }
         }
         return listeRetour;
     }
     @Override
     public boolean update(Selection x) {
         String req = "UPDATE selections SET "
-                +", description = "+ x.getDescription() 
+                +"description = "+ x.getDescription() 
                 +", price = "+ x.getPrice()
                 +", availability = "+ x.getAvailability()
-                    +", WHERE id = "+ x.getId();
+                +", WHERE id = "+ x.getId();
         //System.out.println("REQUETE "+req);
         Statement stm = null;
-        try 
-        {
-                stm = cnx.createStatement(); 
-                int n= stm.executeUpdate(req);
-                if (n>0)
-                {
-                        stm.close();
-                        return true;
-                }
+        try{
+            stm = cnx.createStatement(); 
+            int n= stm.executeUpdate(req);
+            if (n>0){
+                stm.close();
+                return true;
+            }
         }
-        catch (SQLException exp)
-        {
+        catch (SQLException exp){
+            exp.printStackTrace();
         }
-        finally
-        {
-                if (stm!=null)
+        finally{
+            if (stm!=null){
                 try {
-                        stm.close();
+                    stm.close();
                 } catch (SQLException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                }			
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
         }
         return false;
     }
     
-
+    @Override
     public boolean deleteById(int id) {
         String req = "DELETE 1 FROM selections WHERE id = "+id;
         //System.out.println("REQUETE "+req);
@@ -141,24 +136,18 @@ public class SelectionDAO extends DAO<Selection>{
             }
         }
         catch (SQLException exp) {
+            exp.printStackTrace();
         }
-        finally
-        {
-            if (stm!=null)
-            try {
-                stm.close();
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }			
+        finally{
+            if (stm!=null){
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }	
+            }
         }
         return false;
     } 
-
-
-    @Override
-    public boolean delete(Selection x) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }
