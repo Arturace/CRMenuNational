@@ -23,6 +23,58 @@ public class ItemDAO extends DAO<Item>{
     public ItemDAO(Connection cnx) {
         super(cnx);
     }
+    
+    /**
+     * Une copie de getAll en ce moment
+     * @return 
+     */
+    public ArrayList<Item> getMenu(){
+        Statement stm = null;
+        ResultSet r = null;      
+        ArrayList<Item> listeRetour = new ArrayList();
+        try 
+        {
+            stm = cnx.createStatement();
+            r = stm.executeQuery("SELECT items.id, items.name, items.price, items.description, items.category, items.availability, options.name, options.minSelection, options.maxSelection, selections.description, selections.price, selections.availability FROM items \n" +
+                                "INNER JOIN items_options ON items_options.itemsId = items.id\n" +
+                                "INNER JOIN options ON options.id = items_options.optionID\n" +
+                                "INNER JOIN options_selections ON options_elections.optionId\n" +
+                                "INNER JOIN selections ON selections.id = options_selections.selectionsId");
+            Item i;
+            while (r.next())
+            {
+                                    
+                i = new Item(
+                    r.getInt("id"),
+                    r.getInt("name"),
+                    r.getInt("price"),
+                    r.getInt("description"),
+                    r.getInt("category"),    
+                    r.getDouble("availability")
+                );        
+                
+                listeRetour.add(i);
+            }   
+            r.close();
+            stm.close();
+            return listeRetour;
+        }
+        catch (SQLException exp)
+        { }
+        finally
+        {
+            if (stm!=null)
+                try {
+                    r.close();
+                    stm.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }			
+        }
+        return listeRetour;
+    }
+    
     @Override
     public boolean create(Item x) {
 
@@ -137,7 +189,6 @@ public class ItemDAO extends DAO<Item>{
         }
         return false;
     }
-    
     @Override
     public boolean deleteById(int id) {
         String req = "DELETE 1 FROM items WHERE id = "+id;
